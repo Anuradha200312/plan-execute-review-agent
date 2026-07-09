@@ -43,6 +43,7 @@ def reviewer_node(state: AgentState) -> AgentState:
         
         if approved:
             state["review_status"] = "approved"
+            state["review_feedback"] = ""
             state["logs"].append(f"Review SUCCESS: Step '{step['step']}' approved. {feedback}")
             state["sections"].append(state["current_draft"])
             state["current_step_index"] += 1
@@ -50,6 +51,7 @@ def reviewer_node(state: AgentState) -> AgentState:
         else:
             status = "replan" if reason == "replan" else "retry"
             state["review_status"] = status
+            state["review_feedback"] = feedback
             state["logs"].append(f"Review FAILURE ({status.upper()}): {feedback}")
             
             if status == "retry":

@@ -104,7 +104,7 @@ with col2:
                                 st.markdown(f"### 🎉 [Download Generated Word Document (.docx)]({download_url})")
                             
                             # Tabs for output detail
-                            tab1, tab2, tab3 = st.tabs(["📝 Generated Content", "🧭 Planning & Assumptions", "⚙️ Agent Logs"])
+                            tab1, tab2, tab3, tab4 = st.tabs(["📝 Generated Content", "🧭 Planning & Assumptions", "🏁 Interactive Timeline", "⚙️ Raw Logs"])
                             
                             with tab1:
                                 for idx, section in enumerate(data.get("sections", [])):
@@ -124,6 +124,29 @@ with col2:
                                     st.info(assumption)
                                     
                             with tab3:
+                                st.markdown("#### Agent Execution Steps & Loop Timeline")
+                                for log in data.get("logs", []):
+                                    if "Initial state prepared" in log:
+                                        st.markdown(f"⚡ **System:** {log}")
+                                    elif "Planning" in log or "Generated plan" in log or "Replanning" in log:
+                                        with st.chat_message("planner", avatar="📝"):
+                                            st.markdown(log)
+                                    elif "Executing step" in log or "Executor failed" in log:
+                                        with st.chat_message("executor", avatar="⚙️"):
+                                            st.markdown(log)
+                                    elif "Review SUCCESS" in log:
+                                        with st.chat_message("reviewer_success", avatar="✅"):
+                                            st.markdown(log)
+                                    elif "Review FAILURE" in log or "Reviewing draft" in log or "Reviewer node failed" in log:
+                                        with st.chat_message("reviewer", avatar="🔍"):
+                                            st.markdown(log)
+                                    elif "Successfully saved" in log or "Building final" in log:
+                                        with st.chat_message("builder", avatar="📄"):
+                                            st.markdown(log)
+                                    else:
+                                        st.markdown(f"🔹 {log}")
+                                    
+                            with tab4:
                                 st.markdown("#### Execution Trace Logs")
                                 log_text = "\n".join(data.get("logs", []))
                                 st.code(log_text, language="text")

@@ -33,6 +33,7 @@ async def run_agent(payload: AgentRequest):
         "assumptions": [],
         "sections": [],
         "review_status": "",
+        "review_feedback": "",
         "docx_path": "",
         "logs": ["Initial state prepared. Starting agent graph..."]
     }

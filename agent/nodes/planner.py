@@ -28,7 +28,9 @@ def planner_node(state: AgentState) -> AgentState:
             f"\nThis is a REPLAN attempt (Current count: {state['replan_count']}).\n"
             f"The previous plan was: {json.dumps(state['plan'])}\n"
             f"The sections completed/approved so far: {json.dumps(state['sections'])}\n"
-            f"The review verdict requested a replan. Please adjust the plan/steps to incorporate feedback or solve missing requirements."
+            f"The review verdict requested a replan with the following feedback:\n"
+            f"\"{state.get('review_feedback', '')}\"\n"
+            f"Please adjust the plan/steps to incorporate feedback or solve missing requirements."
         )
         
     log_msg = "Planning document structure..." if not is_replanning else f"Replanning document structure (attempt {state['replan_count']})..."

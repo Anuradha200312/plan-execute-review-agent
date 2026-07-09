@@ -10,5 +10,6 @@ class AgentState(TypedDict):
     assumptions: List[str]
     sections: List[Dict[str, str]]      # List of approved {"heading": "...", "body": "..."}
     review_status: str                  # "approved" | "retry" | "replan" | ""
+    review_feedback: str                # Feedback from the reviewer on why a draft/plan failed
     docx_path: str
     logs: List[str]                     # To track decisions and steps for the Streamlit UI

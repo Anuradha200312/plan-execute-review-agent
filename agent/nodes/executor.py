@@ -35,8 +35,9 @@ def executor_node(state: AgentState) -> AgentState:
     
     if state["step_retry_count"] > 0:
         user_prompt += (
-            f"\nNote: This is a retry attempt ({state['step_retry_count']}) for this step. "
-            f"Please address the feedback or expand/improve the content based on the goals."
+            f"\nNote: This is a retry attempt ({state['step_retry_count']}) for this step.\n"
+            f"Reviewer feedback: \"{state.get('review_feedback', '')}\"\n"
+            f"Please address this feedback or expand/improve the content based on the goals."
         )
         
     state["logs"].append(f"Executing step {idx+1}/{len(state['plan'])}: {step['step']}")
